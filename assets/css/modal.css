@@ -2,7 +2,7 @@
     background: rgba(0, 0, 0, 0.9);
     color: #fff;
     position: fixed;
-    top: 0;
+    top: -100vh;
     left: 0;
     height: 100vh;
     width: 100vw;
@@ -32,49 +32,159 @@ body{
 }
 
 #modal-lyrics .card-modal .header{
-    display: flex;
+    
     background-color:rgba(18, 18, 18, 0.774);
     width: 100%;
     height: 20%;
     border-radius: 10px 10px 0 0;
+    display: flex;
     align-items: center;
 }
 
 
+
+
+
 #modal-lyrics .card-modal .header .imagen-song{
-    margin-left: 15px;
+    width:  25%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal-lyrics .card-modal .header .imagen-song .box-imagen{
     width: 90px;
     height: 90px;
-    margin-top: 10px;
     -webkit-box-shadow: 0px 0px 26px -3px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 26px -3px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 26px -3px rgba(0,0,0,0.75);
 }
 
-#modal-lyrics .card-modal .header .imagen-song img{
+
+
+#modal-lyrics .card-modal .header .imagen-song .box-imagen img{
     border-radius: 5px 5px 5px 5px;
     width: 100%;
     height: auto;
     
 }
 
-#moda-lyrics .card-modal .header #close-modal{
-    justify-self: end;
-    align-self: flex-end;
-  top: 1em;
-  right: 1em;
-  z-index: 100;
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-  background: tomato;
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
-  text-align: center;
-  border-radius: 50%;
-  transition: all .5s;
+@supports(object-fit: cover){
+    #modal-lyrics .card-modal .header .imagen-song img{
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
 }
+
+#modal-lyrics .card-modal .header .info{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#modal-lyrics .card-modal .header .info .title{
+    padding-top: 10%;
+    text-align: left;
+    width: 100%;
+    height: 70%;
+    line-height: 70%;
+    font-size: 30px;
+    font-weight: 700;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#modal-lyrics .card-modal .header .info .data{
+    width: 100%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color:#cacaca;
+    font-weight: 600;
+}
+
+#modal-lyrics .card-modal .header .media{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#modal-lyrics .card-modal .header .media .spotify{
+    width: 50%;
+    height: 50%;
+}
+
+#modal-lyrics .card-modal .header .media .spotify .box-spotify{
+    width: 40px;
+    height: 40px;
+}
+
+#modal-lyrics .card-modal .header .media .spotify .box-spotify img{
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+@supports(object-fit: cover){
+    #modal-lyrics .card-modal .header .media .spotify .box-spotify img{
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+}
+
+#modal-lyrics .card-modal .header .media .youtube{
+    width: 50%;
+    height: 50%;
+}
+
+#modal-lyrics .card-modal .header .media .youtube .box-youtube{
+    width: 40px;
+    height: 40px;
+}
+
+#modal-lyrics .card-modal .header .media .youtube .box-youtube img{
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+@supports(object-fit: cover){
+    #modal-lyrics .card-modal .header .media .youtube .box-youtube img{
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+}
+
+#modal-lyrics .card-modal .header .close-modal{
+    width: 5%;
+    height: 100%;
+    display: flex;
+}
+
+#modal-lyrics .card-modal .header .close-modal span{
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    background-color: rgb(232, 23, 23);
+    text-align: center;
+    font-size: 11px;
+    color: #eeeeee;
+    border-radius: 50%;
+}
+
+
+
+
+
 
 #modal-lyrics .card-modal .body{
     width: 100%;
@@ -107,6 +217,7 @@ body{
 
 .card-modal .body::-webkit-scrollbar {
     -webkit-appearance: none;
+
 }
 
 .card-modal .body::-webkit-scrollbar:vertical {
@@ -130,3 +241,87 @@ body{
 .card-modal .body::-webkit-scrollbar-track {
     border-radius: 10px;  
 }
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+  }
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+
+  .lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+  }
+  .lds-ellipsis div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #fff;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+  }
+  @keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+  }

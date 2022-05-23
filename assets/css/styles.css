@@ -186,14 +186,96 @@ header h3{
     align-items: center;
 }
 
-.navMenu a {
+.navMenu .filter {
+    width: 7% ;
     color: #c3c3c3;
     text-decoration: none;
     font-size: 1.2em;
     font-weight: 200;
     margin-right: 10px;
   }
+
+  /*BUSCADOR*/
+  .searchForm {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .searchForm input{
+      width: 80%;
+      height: 70%;
+      border: 1px solid #ccc ;
+      border-radius: 20px 20px;
+      
+  }
+
+  .searchForm input:focus{
+      border: none;
+  }
+
   
+/*LOADER*/
+  
+.loader {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  text-align: center;
+}
+.bar {
+  width: 10px;
+  height: 70px;
+  background: #fff;
+  display: inline-block;
+  transform-origin: bottom center;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  /*   box-shadow:5px 10px 20px inset rgba(255,23,25.2); */
+  animation: loader 1.2s linear infinite;
+}
+.bar1 {
+  animation-delay: 0.1s;
+}
+.bar2 {
+  animation-delay: 0.2s;
+}
+.bar3 {
+  animation-delay: 0.3s;
+}
+.bar4 {
+  animation-delay: 0.4s;
+}
+.bar5 {
+  animation-delay: 0.5s;
+}
+.bar6 {
+  animation-delay: 0.6s;
+}
+.bar7 {
+  animation-delay: 0.7s;
+}
+.bar8 {
+  animation-delay: 0.8s;
+}
+
+@keyframes loader {
+  0% {
+    transform: scaleY(0.1);
+    background: ;
+  }
+  50% {
+    transform: scaleY(1);
+    background: grey;
+  }
+  100% {
+    transform: scaleY(0.1);
+    background: transparent;
+  }
+}
+
   
 
 
