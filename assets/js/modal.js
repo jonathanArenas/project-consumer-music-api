@@ -50,7 +50,7 @@ const renderContentModal = (element) => {
     }
     divInfoTitle.innerHTML = element.title;
     divInfoData.classList.add('data');
-    divInfoData.innerHTML = element.date + '.' + element.lenguage;
+    divInfoData.innerHTML = element.date + ' • ' + element.lenguage.toLocaleUpperCase();
     divMedia.classList.add('media');
     divSpotify.classList.add('spotify');
     divSpotifyBox.classList.add('box-spotify');

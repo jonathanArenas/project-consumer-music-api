@@ -192,9 +192,12 @@ const normalizeDataSong = (dataSong, dataLyric) => {
         spotify: dataSong.response.song?.spotify_uuid || '',
 
     }
+    JSON.stringify(dataLyric)
+    console.log(dataLyric);
+    console.log(dataLyric?.response?.lyrics?.tracking_data);
     const lyric = {
         lyric: dataLyric?.response?.lyrics?.lyrics?.body?.html || '<p>¡¡We are working on it!!</p>',
-        lenguage: dataLyric?.response?.trackingData?.["Lyrics Language"] || '...'
+        lenguage: dataLyric?.response?.lyrics?.tracking_data?.lyrics_language || '...'
     }
     return { ...song, ...lyric };
 }
