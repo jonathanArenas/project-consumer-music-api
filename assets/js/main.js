@@ -1,3 +1,4 @@
+// GLOBAL VARIABLE WITH DATA HEADERS BY COMSUMER API
 const options = {
     method: 'GET',
     headers: {
@@ -12,6 +13,8 @@ const selectArtist = document.getElementById('artists');
 const artists = [];
 const Hits = [];
 
+
+//############EVENT FORM SEARCH###############
 searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const { songSearch } = event.target;
@@ -21,7 +24,8 @@ searchForm.addEventListener('submit', (event) => {
 
 });
 
-selectArtist.addEventListener('change', (event)=>{
+//############EVENT SELECT ARTIST###############
+selectArtist.addEventListener('change', (event) => {
     console.log(event.target.value);
     let artistValue = event.target.value;
     const filterHits = searchingWithFilter(artistValue);
@@ -29,16 +33,18 @@ selectArtist.addEventListener('change', (event)=>{
     filterHits.forEach(renderCardElements);
 })
 
+
+//############ EXECUTION FUNCION###############
 const main = (song = 'tiesto') => {
-        fetch('https://genius-song-lyrics1.p.rapidapi.com/search?q=' + song + '&per_page=50&page=1', options)
+    fetch('https://genius-song-lyrics1.p.rapidapi.com/search?q=' + song + '&per_page=50&page=1', options)
         .then(response => response.json())
         .then(data => firstNormalizeData(data))
         .then(songs => songs.forEach(renderCardElements))
-        .catch(err => console.error(err));    
+        .catch(err => console.error(err));
 }
 
 
-// renderizar el contenido en un Card
+//############RENDER CARD AND CONTENT###############
 const renderCardElements = (element) => {
     const divCard = document.createElement('div');
     const divCardContent = document.createElement('div');
@@ -80,10 +86,10 @@ const renderCardElements = (element) => {
     imgArtist.setAttribute('alt', element.artists.name);
     divArtistImagen.appendChild(imgArtist);
     divContentImagenArtists.appendChild(divArtistImagen);
-    nameArtist  = ''
+    nameArtist = ''
     if (element.artistsNames.length > 25) {
         nameArtist = element.artistsNames.substring(0, 22) + '...';
-    }else{
+    } else {
         nameArtist = element.artistsNames;
     }
     labelNameArtist.innerHTML = nameArtist;
@@ -103,22 +109,21 @@ const renderCardElements = (element) => {
     conteinerCard.appendChild(divCard);
 
 }
-
-// renderizar elementos para filtrar
-const renderFilterSelect = (element) =>{
+//############RENDER OPTIONS SELECT###############
+const renderFilterSelect = (element) => {
     const option = document.createElement('option');
     option.innerHTML = element
-    option.setAttribute('value', element );
+    option.setAttribute('value', element);
     selectArtist.appendChild(option);
 }
 
-const cleanFilterSelect = () =>{
+//############CLEAN OPTIONS SELECT###############
+const cleanFilterSelect = () => {
     selectArtist.innerHTML = '';
 }
-
-//Limpiar el Contenido del contenedor
+//############CLEAN CONTEINER###############
 const cleanView = () => {
-    conteinerCard.innerHTML =  '';
+    conteinerCard.innerHTML = '';
 };
 
 const handleLyricsClick = (event) => {
@@ -128,31 +133,32 @@ const handleLyricsClick = (event) => {
     searchDataSong(id);
 };
 
-const loader = ()=>{
+const loader = () => {
     conteinerCard.innerHTML = '<div class=Wloader"><div class="bar bar1"></div><div class="bar bar2"></div><div class="bar bar3"></div><div class="bar bar4"></div><div class="bar bar5"></div><div class="bar bar6"></div><div class="bar bar7"></div><div class="bar bar8"></div></div>'
 };
 
-
+//############SEARCHING MORE DATA SONG###############
 const searchDataSong = (id) => {
     fetch('https://genius-song-lyrics1.p.rapidapi.com/songs/' + id + '?text_format=dom', options)
-    .then(response => response.json())
-    .then(data => searchLyricSong(data, id))
-    .catch(err => console.log(err));
-   
+        .then(response => response.json())
+        .then(data => searchLyricSong(data, id))
+        .catch(err => console.log(err));
+
 }
 
-const searchLyricSong = (dataSong, id)=>{
-        fetch('https://genius-song-lyrics1.p.rapidapi.com/songs/' + id + '/lyrics', options)
+//############SEARCHING LYRICS SONG###############
+const searchLyricSong = (dataSong, id) => {
+    fetch('https://genius-song-lyrics1.p.rapidapi.com/songs/' + id + '/lyrics', options)
         .then(response => response.json())
         .then(dataLyrics => normalizeDataSong(dataSong, dataLyrics))
         .then(dataModal => renderContentModal(dataModal))
         .catch(err => console.error(err));
 }
 
-// Normaliza los datos default result
-const firstNormalizeData = (data) => { 
+//############NORMALIZING DATA RESPONSE API###############
+const firstNormalizeData = (data) => {
     const hits = [];
-    Hits.splice(0,Hits.length);
+    Hits.splice(0, Hits.length);
     artists.splice(0, artists.length);
     artists.push('All')
     data = data.response.hits;
@@ -167,7 +173,7 @@ const firstNormalizeData = (data) => {
         };
         hits.push(hit);
 
-        if(!artists.includes(result.artist_names,)){
+        if (!artists.includes(result.artist_names,)) {
             artists.push(result.artist_names,);
         }
     });
@@ -176,7 +182,7 @@ const firstNormalizeData = (data) => {
     Hits.push(hits);
     return hits;
 };
-
+//############NORMALIZING AND JOIN DATA SONG###############
 const normalizeDataSong = (dataSong, dataLyric) => {
     const song = {
         title: dataSong.response.song.title,
@@ -193,23 +199,19 @@ const normalizeDataSong = (dataSong, dataLyric) => {
     return { ...song, ...lyric };
 }
 
-
+//############FILTER HITS  BY ARTITS ###############
 const searchingWithFilter = (searchingText) => {
     const data = Hits[0];
     let hitsFiltered = [];
-    if(searchingText === 'All'){
+    if (searchingText === 'All') {
         hitsFiltered = data;
-    }else{
-         hitsFiltered = data.filter(hit => {
+    } else {
+        hitsFiltered = data.filter(hit => {
             const name = hit.artistsNames;
-            console.log(name);
             return name.includes(searchingText);
         });
     }
     return hitsFiltered;
 };
-
-
-
 
 main();

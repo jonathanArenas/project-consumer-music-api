@@ -21,8 +21,7 @@ const openModal = () => {
     body.style.overflow = 'hidden';
 }
 
-
-
+//############NORMALIZING DATA RESPONSE API###############
 const renderContentModal = (element) => {
     const divImagenSong = document.createElement('div');
     const divImagenSongBox = document.createElement('div')
@@ -71,7 +70,6 @@ const renderContentModal = (element) => {
         imagenYoutube.addEventListener('click', openYoutube);
     }
 
-
     divCloseModal.classList.add('close-modal');
     spanCloseModal.innerHTML = 'X';
     spanCloseModal.addEventListener('click', closeModal);
@@ -87,7 +85,6 @@ const renderContentModal = (element) => {
     divYoutube.appendChild(divYoutubeBox);
     divMedia.appendChild(divSpotify);
     divMedia.appendChild(divYoutube);
-
     divCloseModal.appendChild(spanCloseModal);
     cleanModal();
     divModalHeader.appendChild(divImagenSong);
@@ -97,11 +94,9 @@ const renderContentModal = (element) => {
     bodyModalLyrics.style.display = 'block';
     bodyModalLyrics.style.justifyContent = 'none';
     bodyModalLyrics.style.alignContent = 'none';
-
     bodyModalLyrics.innerHTML = element.lyric;
 }
-
-
+//############OPEN MEDIA YOUTUBE OR SPOTIFY###############
 const openYoutube = (event) => {
     let enlace = event.target.getAttribute('enlace');
     console.log(enlace);
