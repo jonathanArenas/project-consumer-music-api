@@ -14,13 +14,15 @@
     </header>
     <div class="filter-nav">
         <nav class="navMenu">
-            <a class="filter" href="#">Almbus</a>
-            <a class="filter" href="#">Artist</a>
-            <a class="filter" href="#">Song</a>
             <form id="searchForm" class="searchForm">
-                <input id="songSearch" type="text" name="songSearch" placeholder="Buscar...">
+                <input id="songSearch" type="text" name="songSearch" placeholder="Search..." autocomplete="off">
             </form>
         </nav>
+        <div class="filter">
+            <label for="artistas">Result Artists</label>
+            <select name="artist" id="artists">
+            </select>
+        </div>
     </div>
     <div class="containerCard" id="containerCard">
         

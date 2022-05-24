@@ -8,7 +8,9 @@ const options = {
 
 const conteinerCard = document.querySelector('#containerCard');
 const searchForm = document.querySelector('#searchForm');
-const dataSong = [];
+const selectArtist = document.getElementById('artists');
+const artists = [];
+const Hits = [];
 
 searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -19,12 +21,20 @@ searchForm.addEventListener('submit', (event) => {
 
 });
 
+selectArtist.addEventListener('change', (event)=>{
+    console.log(event.target.value);
+    let artistValue = event.target.value;
+    const filterHits = searchingWithFilter(artistValue);
+    cleanView();
+    filterHits.forEach(renderCardElements);
+})
+
 const main = (song = 'tiesto') => {
-    fetch('https://genius-song-lyrics1.p.rapidapi.com/search?q=' + song + '&per_page=12&page=1', options)
-        .then(response => response.json(), loader())
-        .then(data => firstNormalizeData(data), cleanView())
+        fetch('https://genius-song-lyrics1.p.rapidapi.com/search?q=' + song + '&per_page=50&page=1', options)
+        .then(response => response.json())
+        .then(data => firstNormalizeData(data))
         .then(songs => songs.forEach(renderCardElements))
-        .catch(err => console.error(err));
+        .catch(err => console.error(err));    
 }
 
 
@@ -44,8 +54,6 @@ const renderCardElements = (element) => {
     const labelNameArtist = document.createElement('label');
     const divMiddle = document.createElement('div');
     const divMiddleText = document.createElement('div');
-
-
 
     divCard.classList.add('card');
     divCardContent.classList.add('card-content');
@@ -72,24 +80,13 @@ const renderCardElements = (element) => {
     imgArtist.setAttribute('alt', element.artists.name);
     divArtistImagen.appendChild(imgArtist);
     divContentImagenArtists.appendChild(divArtistImagen);
-    /*
-    for (let index = 0; index < artistas; index++) { 
-        const divArtistImagen = document.createElement('div')
-        const imgArtist = document.createElement('img');
-        divArtistImagen.classList.add('art-imagen');
-        imgArtist.setAttribute('src', element.artists[index].image_url);
-        imgArtist.setAttribute('alt', element.artists[index].name);
-        divArtistImagen.appendChild(imgArtist);
-        divContentImagenArtists.appendChild(divArtistImagen);
-        if(index ==3){
-            break;
-        }
-
-    }*/
+    nameArtist  = ''
     if (element.artistsNames.length > 25) {
-        element.artistsNames = element.artistsNames.substring(0, 22) + '...';
+        nameArtist = element.artistsNames.substring(0, 22) + '...';
+    }else{
+        nameArtist = element.artistsNames;
     }
-    labelNameArtist.innerHTML = element.artistsNames
+    labelNameArtist.innerHTML = nameArtist;
     divContentNamesArtists.appendChild(labelNameArtist);
 
     divCardContentArtist.appendChild(divContentImagenArtists);
@@ -106,6 +103,19 @@ const renderCardElements = (element) => {
     conteinerCard.appendChild(divCard);
 
 }
+
+// renderizar elementos para filtrar
+const renderFilterSelect = (element) =>{
+    const option = document.createElement('option');
+    option.innerHTML = element
+    option.setAttribute('value', element );
+    selectArtist.appendChild(option);
+}
+
+const cleanFilterSelect = () =>{
+    selectArtist.innerHTML = '';
+}
+
 //Limpiar el Contenido del contenedor
 const cleanView = () => {
     conteinerCard.innerHTML =  '';
@@ -140,10 +150,13 @@ const searchLyricSong = (dataSong, id)=>{
 }
 
 // Normaliza los datos default result
-const firstNormalizeData = (data) => {
+const firstNormalizeData = (data) => { 
     const hits = [];
-    albumData = data.response.hits;
-    albumData.forEach(element => {
+    Hits.splice(0,Hits.length);
+    artists.splice(0, artists.length);
+    artists.push('All')
+    data = data.response.hits;
+    data.forEach(element => {
         const { result } = element;
         const hit = {
             imagen: result.song_art_image_thumbnail_url,
@@ -153,9 +166,15 @@ const firstNormalizeData = (data) => {
             artists: result.primary_artist
         };
         hits.push(hit);
-    });
-    return hits;
 
+        if(!artists.includes(result.artist_names,)){
+            artists.push(result.artist_names,);
+        }
+    });
+    cleanFilterSelect();
+    artists.forEach(renderFilterSelect);
+    Hits.push(hits);
+    return hits;
 };
 
 const normalizeDataSong = (dataSong, dataLyric) => {
@@ -163,16 +182,33 @@ const normalizeDataSong = (dataSong, dataLyric) => {
         title: dataSong.response.song.title,
         imagen: dataSong.response.song.song_art_image_thumbnail_url,
         date: dataSong.response.song.release_date,
-        youtube: dataSong.response.song.youtube_url,
-        spotify: dataSong.response.song.spotify_uuid
+        youtube: dataSong.response.song?.youtube_url || '',
+        spotify: dataSong.response.song?.spotify_uuid || '',
 
     }
     const lyric = {
-        lyric: dataLyric?.response?.lyrics?.lyrics?.body?.html || '<p>We are working on it!!</p>',
+        lyric: dataLyric?.response?.lyrics?.lyrics?.body?.html || '<p>¡¡We are working on it!!</p>',
         lenguage: dataLyric?.response?.trackingData?.["Lyrics Language"] || '...'
     }
     return { ...song, ...lyric };
 }
+
+
+const searchingWithFilter = (searchingText) => {
+    const data = Hits[0];
+    let hitsFiltered = [];
+    if(searchingText === 'All'){
+        hitsFiltered = data;
+    }else{
+         hitsFiltered = data.filter(hit => {
+            const name = hit.artistsNames;
+            console.log(name);
+            return name.includes(searchingText);
+        });
+    }
+    return hitsFiltered;
+};
+
 
 
 
