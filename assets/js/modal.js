@@ -55,7 +55,7 @@ const renderContentModal = (element) => {
     divSpotify.classList.add('spotify');
     divSpotifyBox.classList.add('box-spotify');
     if (element.spotify !== '') {
-        imagenSpotify.setAttribute('src', '../assets/img/spotify.png')
+        imagenSpotify.setAttribute('src', 'assets/img/spotify.png')
         imagenSpotify.setAttribute('alt', 'spotify')
         imagenSpotify.setAttribute('enlace', 'https://open.spotify.com/track/' + element.spotify);
         imagenSpotify.addEventListener('click', openSpotify);
@@ -64,7 +64,7 @@ const renderContentModal = (element) => {
     if (element.youtube !== '') {
         divYoutube.classList.add('youtube');
         divYoutubeBox.classList.add('box-youtube');
-        imagenYoutube.setAttribute('src', '../assets/img/youtube1.png')
+        imagenYoutube.setAttribute('src', 'assets/img/youtube1.png')
         imagenYoutube.setAttribute('alt', 'youtube');
         imagenYoutube.setAttribute('enlace', element.youtube);
         imagenYoutube.addEventListener('click', openYoutube);
