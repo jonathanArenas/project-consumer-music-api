@@ -322,6 +322,19 @@ header h3 {
 }
 
 /*#################CONTENT RESPONSIVE#################*/
+@media (max-width: 480px) {
+ .card{
+   width: 130px;
+   height: 235px;
+ }
+ .card .card-content .imagen {
+   height: 55%;
+ }
+ .card .card-content .title h3 {
+  font-size: 11px;
+ }
+}
+
 @media only screen and (max-width: 600px) {
   .searchForm {
     width: 50%;
