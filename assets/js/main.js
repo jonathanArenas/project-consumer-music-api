@@ -35,7 +35,7 @@ selectArtist.addEventListener('change', (event) => {
 
 
 //############ EXECUTION FUNCION###############
-const main = (song = 'tiesto') => {
+const main = (song = 'morat') => {
     fetch('https://genius-song-lyrics1.p.rapidapi.com/search?q=' + song + '&per_page=50&page=1', options)
         .then(response => response.json())
         .then(data => firstNormalizeData(data))
